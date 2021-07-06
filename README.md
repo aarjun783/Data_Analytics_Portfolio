@@ -1,2 +1,2 @@
 # Data_Analytics_Portfolio
-This repository stores notebooks, containing data visualisations and Machine Learning models of open databases, found on such websites as Kaggle.
+This repository stores notebooks, containing data visualisations done on Tableau and Power BI Desktop and Machine Learning models of open databases, found on open data websites such as Kaggle.
