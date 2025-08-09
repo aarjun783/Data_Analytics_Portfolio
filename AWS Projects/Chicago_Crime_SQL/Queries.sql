@@ -47,10 +47,21 @@ ORDER BY
     time_period,
     crime_count DESC;
 
+Categorical Analysis (Crime-Specific Insights) 
 Question 4 : What are the most common types of locations where crimes are reported?
 SELECT "location description" as location, count(*) as number_of_crimes
 from "raw_data"
 group by 1
 order by 2 desc;
 
+Question 5 :  Is there a significant difference in arrest rates for assaults that occur on the 'STREET' versus those that occur in a 'RESIDENCE'?
+SELECT
+location_description as location_type,
+COUNT_IF(arrest) AS arrests_made,
+ROUND(CAST(COUNT_IF(arrest) AS double) * 100 / COUNT(*), 2) AS arrest_rate_percent
+from "raw_data"
+where primary_type = 'ASSAULT'
+and location_description in ('STREET','RESIDENCE')
+group by 1
+order by 2 desc;
 
