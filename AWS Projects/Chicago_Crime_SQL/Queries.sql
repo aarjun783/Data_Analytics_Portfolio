@@ -47,3 +47,10 @@ ORDER BY
     time_period,
     crime_count DESC;
 
+Question 4 : What are the most common types of locations where crimes are reported?
+SELECT "location description" as location, count(*) as number_of_crimes
+from "raw_data"
+group by 1
+order by 2 desc;
+
+
