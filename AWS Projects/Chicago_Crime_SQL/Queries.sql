@@ -65,3 +65,18 @@ and location_description in ('STREET','RESIDENCE')
 group by 1
 order by 2 desc;
 
+Question 6 : For the primary crime type 'THEFT', what are the most common descriptions (e.g., "OVER $500", "FROM BUILDING", "RETAIL THEFT"), and have their ranks changed over the past five years?
+with list_of_thefts as (SELECT year(date_parse(date, '%m/%d/%Y %h:%i:%s %p')) as year_of_crime,description, count(*) as number_of_crimes from "raw_data" 
+where primary_type='THEFT' 
+GROUP BY 1,2
+order by 1 desc),
+ranked_thefts as (SELECT year_of_crime,
+description,
+number_of_crimes,
+sum(number_of_crimes) over (partition by year_of_crime) as total_crimes_per_year,
+rank() over (partition by year_of_crime order by number_of_crimes desc) as ranked_crimes
+from list_of_thefts)
+select year_of_crime, description, ranked_crimes
+from ranked_thefts
+where ranked_crimes <=5 and year_of_crime between 2020 and 2025
+order by year_of_crime asc, number_of_crimes desc;
